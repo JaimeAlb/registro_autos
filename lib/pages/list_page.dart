@@ -135,7 +135,7 @@ class _ListPageState extends State<ListPage> {
         padding: const EdgeInsets.all(10),
         height: 120,
         // color: i % 2 == 0 ? Color.fromARGB(255, 99, 91, 91) : Color.fromARGB(255, 121, 133, 136),
-        color: Color.fromARGB(255, 148, 113, 6),
+        color: Color.fromARGB(255, 122, 93, 5),
         child: Column(
           children: [
             
@@ -143,9 +143,9 @@ class _ListPageState extends State<ListPage> {
               children: [
                 const Text(
                   'Patente: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 13, 100, 170),),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),
                 ),
-                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 13, 100, 170),),),
+                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),),
               ],
             ),
             Row(
@@ -173,30 +173,18 @@ class _ListPageState extends State<ListPage> {
                 ),
               ],
             ),
-            // ElevatedButton(
-            //   child: const Text('Borrar'),
-            //   onPressed: () async {
-            //     debugPrint(item.id.toString());
-            //     var headers = {'Content-Type': 'application/json'};
-            //     var request = http.Request(
-            //       'DELETE',
-            //       Uri.parse('https://localhost:44337/api/Autos/' +
-            //           item.id.toString()),
-            //     );
-            //     request.headers.addAll(headers);
-
-            //     http.StreamedResponse response = await request.send();
-
-            //     if (response.statusCode == 200) {
-            //       setState(() {});
-            //     } else {
-            //       print(response.reasonPhrase);
-            //     }
-            //   },
-            //   style: ElevatedButton.styleFrom(
-            //     primary: Colors.red,
-            //   ),
-            // )
+            ElevatedButton(
+              child: const Text('Borrar'),
+              onPressed: (){
+                listado.remove(item);
+                setState(() {
+                  
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.red,
+              ),
+            )
           ],
         ),
       );
