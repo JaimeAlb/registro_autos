@@ -96,6 +96,7 @@ class _FormPageSFState extends State<FormPageSF> {
                 ElevatedButton(
                   child: const Text("GUARDAR"),
                   onPressed: () {
+                    if (GlobalList.globalList.length == 0) {lista1 = [];}
                     // postAuto(_patenteController, _marcaController,
                     //     _precioController);
                     var mapaAuto = {
@@ -108,6 +109,7 @@ class _FormPageSFState extends State<FormPageSF> {
                     print(jsonAuto.marca);
                     lista1.add(jsonAuto);
                     GlobalList.globalList = lista1;
+                    print(GlobalList.globalList);
 
                   },
                 ),

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-postAuto(TextEditingController patente, String? marca, TextEditingController precio) async {
+postAuto(String patente, String? marca, String precio) async {
   var mapaAuto = <String, dynamic>{}; //map object
   var headers = {'Content-Type': 'application/json'};
   var request = http.Request(
@@ -12,9 +12,9 @@ postAuto(TextEditingController patente, String? marca, TextEditingController pre
     Uri.parse('https://localhost:44337/api/Autos'),
   );
   mapaAuto = {
-    "Patente": patente.text,
+    "Patente": patente,
     "Marca": marca?.toString(),
-    "Precio": precio.text
+    "Precio": precio
   };
   
   request.body = json.encode(mapaAuto); // string object

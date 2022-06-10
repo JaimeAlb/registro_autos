@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:registro_autos/pages/api/post_auto_list.dart';
 import 'package:registro_autos/pages/clases/listaAutos.dart';
 // import 'package:registro_autos/pages/clases/listaMarcas.dart';
 import 'package:http/http.dart' as http;
@@ -9,6 +10,7 @@ import 'dart:convert';
 
 import 'package:registro_autos/pages/global_list.dart';
 
+import 'api/post_auto.dart';
 import 'global.dart';
 
 class ListPage extends StatefulWidget {
@@ -51,7 +53,7 @@ class _ListPageState extends State<ListPage> {
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         height: 120,
-        color: i % 2 == 0 ? const Color.fromARGB(255, 216, 206, 206) : const Color.fromARGB(255, 221, 225, 226),
+        color: i % 2 == 0 ? Color.fromARGB(255, 99, 91, 91) : Color.fromARGB(255, 121, 133, 136),
         child: Column(
           children: [
             
@@ -59,9 +61,9 @@ class _ListPageState extends State<ListPage> {
               children: [
                 const Text(
                   'Patente: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 13, 100, 170),),
+                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),
                 ),
-                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 13, 100, 170),),),
+                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),),
               ],
             ),
             Row(
@@ -132,7 +134,8 @@ class _ListPageState extends State<ListPage> {
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         height: 120,
-        color: i % 2 == 0 ? const Color.fromARGB(255, 216, 206, 206) : const Color.fromARGB(255, 221, 225, 226),
+        // color: i % 2 == 0 ? Color.fromARGB(255, 99, 91, 91) : Color.fromARGB(255, 121, 133, 136),
+        color: Color.fromARGB(255, 148, 113, 6),
         child: Column(
           children: [
             
@@ -211,8 +214,19 @@ class _ListPageState extends State<ListPage> {
         body: SingleChildScrollView(
             child: Column(
           children: [
-            ElevatedButton(onPressed: null, child: const Text('Update List')),
-            Center(child: Column(
+            ElevatedButton(
+                onPressed: () {
+                  GlobalList.globalList.forEach((e) {
+                    postAuto(e.patente, e.marca, e.precio);
+                  });
+                  GlobalList.globalList = [];
+                  setState(() {               
+                  });
+                  print(GlobalList.globalList);
+                },
+                child: const Text('Update List')),
+            Center(
+                child: Column(
               children: [
                 FutureBuilder<List<ListaAutos>>(
                   future: getListOfAutos(),

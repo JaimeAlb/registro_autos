@@ -16,7 +16,9 @@ class MyApp extends StatelessWidget {
       title: 'Registro Autos',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        // scaffoldBackgroundColor: Color.fromARGB(179, 37, 33, 33)
       ),
+      darkTheme: ThemeData.dark(),
       home: LoginPage(),
     );
   }
