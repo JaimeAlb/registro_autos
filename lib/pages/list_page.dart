@@ -199,8 +199,8 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Center(child: Text("Listado Autos App"))),
-        body: SingleChildScrollView(
-            child: Column(
+      body: SingleChildScrollView(
+        child: Column(
           children: [
             ElevatedButton(
                 onPressed: () {
@@ -208,29 +208,34 @@ class _ListPageState extends State<ListPage> {
                     postAuto(e.patente, e.marca, e.precio);
                   });
                   GlobalList.globalList = [];
-                  setState(() {               
-                  });
                   print(GlobalList.globalList);
+
+                  Future.delayed(const Duration(milliseconds: 100), () {
+                  setState(() {});
+                  });
                 },
                 child: const Text('Update List')),
             Center(
-                child: Column(
-              children: [
-                FutureBuilder<List<ListaAutos>>(
-                  future: getListOfAutos(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return listOfAutos(snapshot.data!);
-                    } else if (snapshot.hasError) {
-                      return Text("${snapshot.error}");
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
-                listOfAutos2(GlobalList.globalList)
-              ],
-            )),
+              child: Column(
+                children: [
+                  FutureBuilder<List<ListaAutos>>(
+                    future: getListOfAutos(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return listOfAutos(snapshot.data!);
+                      } else if (snapshot.hasError) {
+                        return Text("${snapshot.error}");
+                      }
+                      return const CircularProgressIndicator();
+                    },
+                  ),
+                  listOfAutos2(GlobalList.globalList)
+                ],
+              ),
+            ),
           ],
-        )));
+        ),
+      ),
+    );
   }
 }

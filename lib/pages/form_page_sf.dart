@@ -55,7 +55,6 @@ class _FormPageSFState extends State<FormPageSF> {
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(),
-                        // hintText: 'Buscar Marca',
                         hintText: 'Buscar Marca',
                       ),
                     ),                   
