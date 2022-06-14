@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/api/marca_api.dart';
-import 'package:registro_autos/pages/api/post_auto.dart';
-import 'package:registro_autos/pages/clases/listaAutos.dart';
-import 'package:registro_autos/pages/clases/listaAutos2.dart';
+// import 'package:registro_autos/pages/api/post_auto.dart';
+// import 'package:registro_autos/pages/clases/listaAutos.dart';
+// import 'package:registro_autos/pages/clases/listaAutos2.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/list_page.dart';
 import 'clases/lista_autos3.dart';
-import 'global.dart';
+// import 'global.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FormPageSF extends StatefulWidget {

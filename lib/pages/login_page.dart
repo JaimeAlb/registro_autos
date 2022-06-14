@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:registro_autos/pages/form_page.dart';
 import 'package:registro_autos/pages/form_page_sf.dart';
-import 'global.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -29,7 +27,6 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 10),
             TextField(
               controller: _nombreController,
-              // keyboardType: TextInputType.number,
               decoration: const InputDecoration(border: OutlineInputBorder()),
             ),
             const SizedBox(height: 40),
@@ -37,7 +34,6 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 10),
             TextField(
               controller: _passwordController,
-              // keyboardType: TextInputType.number,
               decoration: const InputDecoration(border: OutlineInputBorder()),
             ),
             const SizedBox(height: 40),
@@ -55,14 +51,12 @@ class LoginPage extends StatelessWidget {
                 http.StreamedResponse response = await request.send();
 
                 if (response.statusCode == 200) {
-                  // print(await response.stream.bytesToString());
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => const FormPageSF(),
                       ));
                 } else {
-                  // print(response.reasonPhrase);
                   ScaffoldMessenger.of(context)
                     ..removeCurrentSnackBar()
                     ..showSnackBar(const SnackBar(

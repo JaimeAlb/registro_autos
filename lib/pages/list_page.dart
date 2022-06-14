@@ -1,20 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/api/post_auto_list.dart';
 import 'package:registro_autos/pages/clases/listaAutos.dart';
-// import 'package:registro_autos/pages/clases/listaMarcas.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:registro_autos/pages/clases/listaAutos2.dart';
 import 'package:registro_autos/pages/clases/lista_autos3.dart';
-import 'dart:convert';
-
 import 'package:registro_autos/pages/global_list.dart';
-
 import 'api/post_auto.dart';
-import 'global.dart';
 
 class ListPage extends StatefulWidget {
-  ListPage({Key? key}) : super(key: key);
+  const ListPage({Key? key}) : super(key: key);
 
   @override
   State<ListPage> createState() => _ListPageState();
@@ -26,12 +20,8 @@ Future<List<ListaAutos>> getListOfAutos() async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    // debugPrint(response.body);
 
     final listaAutos = listaAutosFromJson(response.body);
-    // print(response.body);
-    // listaAutos2 = listaAutosFromJson2(Global.mensaje);
-    // print(Global.mensaje);
 
     return listaAutos;
   } else {
@@ -49,21 +39,30 @@ class _ListPageState extends State<ListPage> {
       i++;
       Widget obj = Container(
         width: 800,
-
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         height: 120,
-        color: i % 2 == 0 ? Color.fromARGB(255, 99, 91, 91) : Color.fromARGB(255, 121, 133, 136),
+        color: i % 2 == 0
+            ? const Color.fromARGB(255, 99, 91, 91)
+            : const Color.fromARGB(255, 121, 133, 136),
         child: Column(
           children: [
-            
             Row(
               children: [
                 const Text(
                   'Patente: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
                 ),
-                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),),
+                Text(
+                  item.patente,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
               ],
             ),
             Row(
@@ -123,27 +122,26 @@ class _ListPageState extends State<ListPage> {
       children: listadoWidget,
     );
   }
+
   Widget listOfAutos2(List<ListaAutos3> listado) {
     List<Widget> listadoWidget = [];
-    int i = 0;
     for (var item in listado) {
-      i++;
       Widget obj = Container(
         width: 800,
 
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         height: 120,
-        // color: i % 2 == 0 ? Color.fromARGB(255, 99, 91, 91) : Color.fromARGB(255, 121, 133, 136),
-        color: Color.fromARGB(255, 122, 93, 5),
+        color: const Color.fromARGB(255, 122, 93, 5),
         child: Column(
           children: [
-            
             Row(
               children: [
                 const Text(
                   'Patente: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),),
                 ),
                 Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),),
               ],
@@ -167,7 +165,6 @@ class _ListPageState extends State<ListPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  // '${formatCurrency.format(item.precio)}',
                   item.precio,
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
@@ -175,11 +172,9 @@ class _ListPageState extends State<ListPage> {
             ),
             ElevatedButton(
               child: const Text('Borrar'),
-              onPressed: (){
+              onPressed: () {
                 listado.remove(item);
-                setState(() {
-                  
-                });
+                setState(() {});
               },
               style: ElevatedButton.styleFrom(
                 primary: Colors.red,
@@ -208,10 +203,9 @@ class _ListPageState extends State<ListPage> {
                     postAuto(e.patente, e.marca, e.precio);
                   });
                   GlobalList.globalList = [];
-                  print(GlobalList.globalList);
-
+                  // print(GlobalList.globalList);
                   Future.delayed(const Duration(milliseconds: 100), () {
-                  setState(() {});
+                    setState(() {});
                   });
                 },
                 child: const Text('Update List')),
