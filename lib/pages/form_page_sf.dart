@@ -19,12 +19,14 @@ class FormPageSF extends StatefulWidget {
 }
 
 final TextEditingController _patenteController = TextEditingController();
+// final TextEditingController _marcaController = TextEditingController();
 String? _marcaController;
 var lista1 = <ListaAutos3>[];
 final TextEditingController _precioController = TextEditingController();
+bool optionSelected = false;
 
 class _FormPageSFState extends State<FormPageSF> {
-  String? valueChoose;
+  String hintTexto = 'Marca';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,13 +50,15 @@ class _FormPageSFState extends State<FormPageSF> {
                 Center(
                   child: TypeAheadField<Marca?>(
                     hideSuggestionsOnKeyboardHide: false,
-                    textFieldConfiguration: const TextFieldConfiguration(
-                      decoration: InputDecoration(
+                    textFieldConfiguration: TextFieldConfiguration(
+                      controller: TextEditingController(text: (_marcaController)),
+                      decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(),
+                        // hintText: 'Buscar Marca',
                         hintText: 'Buscar Marca',
                       ),
-                    ),
+                    ),                   
                     suggestionsCallback: UserApi.getUserSuggestions,
                     itemBuilder: (context, Marca? suggestion) {
                       final user = suggestion!;
@@ -75,7 +79,8 @@ class _FormPageSFState extends State<FormPageSF> {
                     onSuggestionSelected: (Marca? suggestion) {
                       final marca = suggestion!;
                       _marcaController = marca.name;
-
+                      setState(() {     
+                      });
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBar(
