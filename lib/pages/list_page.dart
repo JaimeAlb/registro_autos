@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/clases/listaAutos.dart';
+import 'package:registro_autos/pages/clases/lista_autos.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:registro_autos/pages/clases/lista_autos3.dart';
+import 'package:registro_autos/pages/clases/local_auto.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'api/post_auto.dart';
 
@@ -13,7 +13,7 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-Future<List<ListaAutos>> getListOfAutos() async {
+Future<List<ListaAutos>> getListOfAutosFromApi() async {
   const String url = 'https://localhost:44337/api/Autos';
   final response = await http.get(Uri.parse(url));
 
@@ -29,7 +29,7 @@ Future<List<ListaAutos>> getListOfAutos() async {
 class _ListPageState extends State<ListPage> {
   final formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
 
-  Widget listOfAutos(List<ListaAutos> listado) {
+  Widget listOfAutosFromApi(List<ListaAutos> listado) {
     List<Widget> listadoWidget = [];
     int i = 0;
     for (var item in listado) {
@@ -120,7 +120,7 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Widget listOfAutos2(List<ListaAutos3> listado) {
+  Widget listOfAutosFromLocal(List<LocalAuto> listado) {
     List<Widget> listadoWidget = [];
     for (var item in listado) {
       Widget obj = Container(
@@ -215,17 +215,17 @@ class _ListPageState extends State<ListPage> {
               child: Column(
                 children: [
                   FutureBuilder<List<ListaAutos>>(
-                    future: getListOfAutos(),
+                    future: getListOfAutosFromApi(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return listOfAutos(snapshot.data!);
+                        return listOfAutosFromApi(snapshot.data!);
                       } else if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
                       return const CircularProgressIndicator();
                     },
                   ),
-                  listOfAutos2(GlobalList.globalList)
+                  listOfAutosFromLocal(GlobalList.globalList)
                 ],
               ),
             ),

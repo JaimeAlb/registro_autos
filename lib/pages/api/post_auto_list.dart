@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../clases/lista_autos3.dart';
+import '../clases/local_auto.dart';
 
-postAutoList(List<ListaAutos3> listado) {
+postAutoList(List<LocalAuto> listado) {
   var mapaAuto = <String, dynamic>{}; //map object
   var headers = {'Content-Type': 'application/json'};
   var request = http.Request(

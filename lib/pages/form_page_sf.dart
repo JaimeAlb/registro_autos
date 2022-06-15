@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/api/marca_api.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/list_page.dart';
-import 'clases/lista_autos3.dart';
+import 'clases/local_auto.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:convert';
 
@@ -15,9 +15,8 @@ class FormPageSF extends StatefulWidget {
 
 final TextEditingController _patenteController = TextEditingController();
 String? _marcaController;
-var lista1 = <ListaAutos3>[];
 final TextEditingController _precioController = TextEditingController();
-bool optionSelected = false;
+var autosLocalList = <LocalAuto>[];
 
 class _FormPageSFState extends State<FormPageSF> {
   String hintTexto = 'Marca';
@@ -41,46 +40,43 @@ class _FormPageSFState extends State<FormPageSF> {
                 const SizedBox(height: 40),
                 const Text("MARCA"),
                 const SizedBox(height: 10),
-                Center(
-                  child: TypeAheadField<Marca?>(
-                    hideSuggestionsOnKeyboardHide: false,
-                    textFieldConfiguration: TextFieldConfiguration(
-                      controller:
-                          TextEditingController(text: (_marcaController)),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search),
-                        border: OutlineInputBorder(),
-                        hintText: 'Buscar Marca',
-                      ),
+                TypeAheadField<Marca?>(
+                  hideSuggestionsOnKeyboardHide: false,
+                  textFieldConfiguration: TextFieldConfiguration(
+                    controller: TextEditingController(text: (_marcaController)),
+                    decoration: const InputDecoration(
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(),
+                      hintText: 'Buscar Marca',
                     ),
-                    suggestionsCallback: UserApi.getUserSuggestions,
-                    itemBuilder: (context, Marca? suggestion) {
-                      final user = suggestion!;
-
-                      return ListTile(
-                        title: Text(user.name),
-                      );
-                    },
-                    noItemsFoundBuilder: (context) => const SizedBox(
-                      height: 100,
-                      child: Center(
-                        child: Text(
-                          'Marca no encontrada',
-                          style: TextStyle(fontSize: 24),
-                        ),
-                      ),
-                    ),
-                    onSuggestionSelected: (Marca? suggestion) {
-                      final marca = suggestion!;
-                      _marcaController = marca.name;
-                      setState(() {});
-                      ScaffoldMessenger.of(context)
-                        ..removeCurrentSnackBar()
-                        ..showSnackBar(SnackBar(
-                          content: Text('Marca seleccionada: ${marca.name}'),
-                        ));
-                    },
                   ),
+                  suggestionsCallback: UserApi.getUserSuggestions,
+                  itemBuilder: (context, Marca? suggestion) {
+                    final user = suggestion!;
+
+                    return ListTile(
+                      title: Text(user.name),
+                    );
+                  },
+                  noItemsFoundBuilder: (context) => const SizedBox(
+                    height: 100,
+                    child: Center(
+                      child: Text(
+                        'Marca no encontrada',
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
+                  ),
+                  onSuggestionSelected: (Marca? suggestion) {
+                    final marca = suggestion!;
+                    _marcaController = marca.name;
+                    setState(() {});
+                    ScaffoldMessenger.of(context)
+                      ..removeCurrentSnackBar()
+                      ..showSnackBar(SnackBar(
+                        content: Text('Marca seleccionada: ${marca.name}'),
+                      ));
+                  },
                 ),
                 const SizedBox(height: 40),
                 const Text("PRECIO"),
@@ -95,7 +91,7 @@ class _FormPageSFState extends State<FormPageSF> {
                   child: const Text("GUARDAR"),
                   onPressed: () {
                     if (GlobalList.globalList.isEmpty) {
-                      lista1 = [];
+                      autosLocalList = [];
                     }
                     var mapaAuto = {
                       "Patente": _patenteController.text,
@@ -103,9 +99,9 @@ class _FormPageSFState extends State<FormPageSF> {
                       "Precio": _precioController.text
                     };
                     var stringAuto = json.encode(mapaAuto);
-                    var jsonAuto = listaAutos3FromJson(stringAuto);
-                    lista1.add(jsonAuto);
-                    GlobalList.globalList = lista1;
+                    var jsonAuto = localAutoFromJson(stringAuto);
+                    autosLocalList.add(jsonAuto);
+                    GlobalList.globalList = autosLocalList;
                   },
                 ),
                 const SizedBox(height: 40),
