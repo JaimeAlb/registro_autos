@@ -1,4 +1,3 @@
-import 'package:registro_autos/pages/clases/listaAutos.dart';
 import 'package:registro_autos/pages/clases/lista_autos3.dart';
 
 class GlobalList {

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/clases/listaAutos.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:registro_autos/pages/clases/listaAutos2.dart';
 import 'package:registro_autos/pages/clases/lista_autos3.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'api/post_auto.dart';
@@ -14,13 +13,11 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-List<ListaAutos2> listaAutos2 = [];
 Future<List<ListaAutos>> getListOfAutos() async {
   const String url = 'https://localhost:44337/api/Autos';
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-
     final listaAutos = listaAutosFromJson(response.body);
 
     return listaAutos;
@@ -84,7 +81,7 @@ class _ListPageState extends State<ListPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  '${formatCurrency.format(item.precio)}',
+                  formatCurrency.format(item.precio),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -106,7 +103,7 @@ class _ListPageState extends State<ListPage> {
                 if (response.statusCode == 200) {
                   setState(() {});
                 } else {
-                  print(response.reasonPhrase);
+                  debugPrint(response.reasonPhrase);
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -128,7 +125,6 @@ class _ListPageState extends State<ListPage> {
     for (var item in listado) {
       Widget obj = Container(
         width: 800,
-
         margin: const EdgeInsets.all(5),
         padding: const EdgeInsets.all(10),
         height: 120,
@@ -141,9 +137,16 @@ class _ListPageState extends State<ListPage> {
                   'Patente: ',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),),
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
                 ),
-                Text(item.patente, style: const TextStyle(fontWeight: FontWeight.bold, color: Color.fromARGB(255, 0, 0, 0),),),
+                Text(
+                  item.patente,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
               ],
             ),
             Row(
@@ -193,17 +196,16 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Center(child: Text("Listado Autos App"))),
+      appBar: AppBar(title: const Center(child: Text("Listado Autos App"))),
       body: SingleChildScrollView(
         child: Column(
           children: [
             ElevatedButton(
                 onPressed: () {
-                  GlobalList.globalList.forEach((e) {
+                  for (var e in GlobalList.globalList) {
                     postAuto(e.patente, e.marca, e.precio);
-                  });
+                  }
                   GlobalList.globalList = [];
-                  // print(GlobalList.globalList);
                   Future.delayed(const Duration(milliseconds: 100), () {
                     setState(() {});
                   });

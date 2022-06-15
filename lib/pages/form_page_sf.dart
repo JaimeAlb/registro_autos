@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/api/marca_api.dart';
-// import 'package:registro_autos/pages/api/post_auto.dart';
-// import 'package:registro_autos/pages/clases/listaAutos.dart';
-// import 'package:registro_autos/pages/clases/listaAutos2.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/list_page.dart';
 import 'clases/lista_autos3.dart';
-// import 'global.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-// import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class FormPageSF extends StatefulWidget {
@@ -19,7 +14,6 @@ class FormPageSF extends StatefulWidget {
 }
 
 final TextEditingController _patenteController = TextEditingController();
-// final TextEditingController _marcaController = TextEditingController();
 String? _marcaController;
 var lista1 = <ListaAutos3>[];
 final TextEditingController _precioController = TextEditingController();
@@ -51,13 +45,14 @@ class _FormPageSFState extends State<FormPageSF> {
                   child: TypeAheadField<Marca?>(
                     hideSuggestionsOnKeyboardHide: false,
                     textFieldConfiguration: TextFieldConfiguration(
-                      controller: TextEditingController(text: (_marcaController)),
+                      controller:
+                          TextEditingController(text: (_marcaController)),
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Icons.search),
                         border: OutlineInputBorder(),
                         hintText: 'Buscar Marca',
                       ),
-                    ),                   
+                    ),
                     suggestionsCallback: UserApi.getUserSuggestions,
                     itemBuilder: (context, Marca? suggestion) {
                       final user = suggestion!;
@@ -78,8 +73,7 @@ class _FormPageSFState extends State<FormPageSF> {
                     onSuggestionSelected: (Marca? suggestion) {
                       final marca = suggestion!;
                       _marcaController = marca.name;
-                      setState(() {     
-                      });
+                      setState(() {});
                       ScaffoldMessenger.of(context)
                         ..removeCurrentSnackBar()
                         ..showSnackBar(SnackBar(
@@ -100,9 +94,9 @@ class _FormPageSFState extends State<FormPageSF> {
                 ElevatedButton(
                   child: const Text("GUARDAR"),
                   onPressed: () {
-                    if (GlobalList.globalList.length == 0) {lista1 = [];}
-                    // postAuto(_patenteController, _marcaController,
-                    //     _precioController);
+                    if (GlobalList.globalList.isEmpty) {
+                      lista1 = [];
+                    }
                     var mapaAuto = {
                       "Patente": _patenteController.text,
                       "Marca": _marcaController?.toString(),
@@ -110,11 +104,8 @@ class _FormPageSFState extends State<FormPageSF> {
                     };
                     var stringAuto = json.encode(mapaAuto);
                     var jsonAuto = listaAutos3FromJson(stringAuto);
-                    print(jsonAuto.marca);
                     lista1.add(jsonAuto);
                     GlobalList.globalList = lista1;
-                    print(GlobalList.globalList);
-
                   },
                 ),
                 const SizedBox(height: 40),
@@ -124,7 +115,7 @@ class _FormPageSFState extends State<FormPageSF> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ListPage(),
+                          builder: (context) => const ListPage(),
                         ));
                   },
                 ),
