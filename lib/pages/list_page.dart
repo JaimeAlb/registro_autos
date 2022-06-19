@@ -18,7 +18,8 @@ Future<List<ListaAutos>> getListOfAutosFromApi() async {
   final response = await http.get(Uri.parse(url));
 
   if (response.statusCode == 200) {
-    final listaAutos = listaAutosFromJson(response.body);
+    // final listaAutos = listaAutosFromJson(response.body);
+    List<ListaAutos> listaAutos = listaAutosFromJson(response.body);
 
     return listaAutos;
   } else {
@@ -30,9 +31,12 @@ class _ListPageState extends State<ListPage> {
   final formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
 
   Widget listOfAutosFromApi(List<ListaAutos> listado) {
-    List<Widget> listadoWidget = [];
-    int i = 0;
+    var listadoWidget = <Widget>[];
+    var i = 0;
+    const foo = [];
     for (var item in listado) {
+      // foo = [1];
+      debugPrint('foo, $foo');
       i++;
       Widget obj = Container(
         width: 800,
@@ -121,7 +125,7 @@ class _ListPageState extends State<ListPage> {
   }
 
   Widget listOfAutosFromLocal(List<LocalAuto> listado) {
-    List<Widget> listadoWidget = [];
+    var listadoWidget = <Widget>[];
     for (var item in listado) {
       Widget obj = Container(
         width: 800,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/api/marca_api.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/list_page.dart';
+import 'package:registro_autos/pages/widgets/text_field.dart';
 import 'clases/local_auto.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:convert';
@@ -19,7 +20,6 @@ final TextEditingController _precioController = TextEditingController();
 var autosLocalList = <LocalAuto>[];
 
 class _FormPageSFState extends State<FormPageSF> {
-  String hintTexto = 'Marca';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +29,7 @@ class _FormPageSFState extends State<FormPageSF> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                const SizedBox(height: 40),
-                const Text("PATENTE"),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _patenteController,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                ),
-                const SizedBox(height: 40),
+                textField_1("PATENTE", _patenteController, "DTFJ-19"),
                 const Text("MARCA"),
                 const SizedBox(height: 10),
                 TypeAheadField<Marca?>(
@@ -78,18 +70,12 @@ class _FormPageSFState extends State<FormPageSF> {
                       ));
                   },
                 ),
-                const SizedBox(height: 40),
-                const Text("PRECIO"),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: _precioController,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                ),
-                const SizedBox(height: 40),
+                textField_2("PRECIO", _precioController, "\$10.000.000"),
                 ElevatedButton(
                   child: const Text("GUARDAR"),
                   onPressed: () {
+                    debugPrint(_patenteController.text);
+                    
                     if (GlobalList.globalList.isEmpty) {
                       autosLocalList = [];
                     }
