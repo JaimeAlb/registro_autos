@@ -29,7 +29,7 @@ class _FormPageSFState extends State<FormPageSF> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                textField_1("PATENTE", _patenteController, "DTFJ-19"),
+                textFieldPatente("PATENTE", _patenteController, "DTFJ-19"),
                 const Text("MARCA"),
                 const SizedBox(height: 10),
                 TypeAheadField<Marca?>(
@@ -70,11 +70,15 @@ class _FormPageSFState extends State<FormPageSF> {
                       ));
                   },
                 ),
-                textField_2("PRECIO", _precioController, "\$10.000.000"),
+                textFieldPrecio("PRECIO", _precioController, "\$10.000.000"),
                 ElevatedButton(
                   child: const Text("GUARDAR"),
                   onPressed: () {
                     debugPrint(_patenteController.text);
+                    debugPrint(_precioController.text);
+                    String precioControllerClean = _precioController.text;
+                    precioControllerClean = precioControllerClean.replaceAll(RegExp('[^0-9]'), '');
+                    debugPrint(precioControllerClean);
                     
                     if (GlobalList.globalList.isEmpty) {
                       autosLocalList = [];
@@ -82,7 +86,7 @@ class _FormPageSFState extends State<FormPageSF> {
                     var mapaAuto = {
                       "Patente": _patenteController.text,
                       "Marca": _marcaController?.toString(),
-                      "Precio": _precioController.text
+                      "Precio": precioControllerClean
                     };
                     var stringAuto = json.encode(mapaAuto);
                     var jsonAuto = localAutoFromJson(stringAuto);

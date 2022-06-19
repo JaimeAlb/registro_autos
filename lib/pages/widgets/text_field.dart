@@ -1,9 +1,11 @@
+import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 // import 'package:flutter/services.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 
-Widget textField_1(String name, TextEditingController controllerText, String hint) {
+Widget textFieldPatente(String name, TextEditingController controllerText, String hint) {
   var maskFormatter = MaskTextInputFormatter(
     mask: 'AAAA-##',
     // mask: 'AAAAAAA',
@@ -25,7 +27,8 @@ Widget textField_1(String name, TextEditingController controllerText, String hin
     ],
   );
 }
-Widget textField_2(String name, TextEditingController controllerText, String hint) {
+Widget textFieldPrecio(String name, TextEditingController controllerText, String hint) {
+  // final CurrencyTextInputFormatter formatter = CurrencyTextInputFormatter();
   // var maskFormatter = MaskTextInputFormatter(
   //   mask: '\$',
   // );
@@ -36,11 +39,15 @@ Widget textField_2(String name, TextEditingController controllerText, String hin
       const SizedBox(height: 10),
       TextField(
         controller: controllerText,
-        decoration: InputDecoration(border: const OutlineInputBorder(), hintText: hint),
-        // inputFormatters: [
-        //  maskFormatter,
-        // ],
-        
+        decoration:
+            InputDecoration(border: const OutlineInputBorder(), hintText: hint),
+        inputFormatters: <TextInputFormatter>[
+              CurrencyTextInputFormatter(
+                // locale: 'cl',
+                decimalDigits: 0,
+                symbol: '\$ ',
+              ),
+            ],
       ),
       const SizedBox(height: 40),
     ],

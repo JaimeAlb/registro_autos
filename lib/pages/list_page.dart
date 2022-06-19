@@ -172,7 +172,7 @@ class _ListPageState extends State<ListPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  item.precio,
+                  formatCurrency.format(int.parse(item.precio)),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
