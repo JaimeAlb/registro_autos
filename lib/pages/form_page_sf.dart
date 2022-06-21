@@ -74,11 +74,8 @@ class _FormPageSFState extends State<FormPageSF> {
                 ElevatedButton(
                   child: const Text("GUARDAR"),
                   onPressed: () {
-                    debugPrint(_patenteController.text);
-                    debugPrint(_precioController.text);
                     String precioControllerClean = _precioController.text;
                     precioControllerClean = precioControllerClean.replaceAll(RegExp('[^0-9]'), '');
-                    debugPrint(precioControllerClean);
                     
                     if (GlobalList.globalList.isEmpty) {
                       autosLocalList = [];

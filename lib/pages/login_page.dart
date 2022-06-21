@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/form_page_sf.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:registro_autos/pages/api/post_login.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -39,31 +37,8 @@ class LoginPage extends StatelessWidget {
             const SizedBox(height: 40),
             ElevatedButton(
               child: const Text("ACCEDER"),
-              onPressed: () async {
-                var headers = {'Content-Type': 'application/json'};
-                var request = http.Request(
-                    'POST', Uri.parse('http://localhost:53688/Login'));
-                request.body = json.encode({
-                  "Username": _nombreController.text,
-                  "Password": _passwordController.text,
-                });
-                request.headers.addAll(headers);
-                http.StreamedResponse response = await request.send();
-
-                if (response.statusCode == 200) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FormPageSF(),
-                      ));
-                } else {
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(const SnackBar(
-                      content: Text('Intente Nuevamente'),
-                    ));
-                }
-              },     
+              onPressed: () =>
+                  postLogin(_nombreController, _passwordController, context),
             ),
           ],
         ),
