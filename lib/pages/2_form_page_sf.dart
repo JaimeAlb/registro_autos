@@ -1,25 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:registro_autos/pages/api/marca_api.dart';
 import 'package:registro_autos/pages/global_list.dart';
-import 'package:registro_autos/pages/list_page.dart';
-import 'package:registro_autos/pages/widgets/text_field.dart';
+import 'package:registro_autos/pages/3_list_page.dart';
+import 'package:registro_autos/pages/widgets/button_void_callback.dart';
+import 'package:registro_autos/pages/widgets/text_field_patente.dart';
+import 'package:registro_autos/pages/widgets/text_field_precio.dart';
 import 'clases/local_auto.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:convert';
 
 class FormPageSF extends StatefulWidget {
   const FormPageSF({Key? key}) : super(key: key);
-
   @override
   State<FormPageSF> createState() => _FormPageSFState();
 }
 
-final TextEditingController _patenteController = TextEditingController();
-String? _marcaController;
-final TextEditingController _precioController = TextEditingController();
-var autosLocalList = <LocalAuto>[];
-
 class _FormPageSFState extends State<FormPageSF> {
+  final TextEditingController patenteController = TextEditingController();
+  String? marcaController;
+  final TextEditingController precioController = TextEditingController();
+  var autosLocalList = <LocalAuto>[];
+  // List<LocalAuto> globalLista = [  ];
+
+  void _guardarAuto() {
+    String precioControllerClean = precioController.text;
+    precioControllerClean =
+        precioControllerClean.replaceAll(RegExp('[^0-9]'), '');
+
+    if (GlobalList.globalList.isEmpty) {
+      autosLocalList = [];
+    }
+    var mapaAuto = {
+      "Patente": patenteController.text,
+      "Marca": marcaController?.toString(),
+      "Precio": precioControllerClean
+    };
+    var stringAuto = json.encode(mapaAuto);
+    var jsonAuto = localAutoFromJson(stringAuto);
+    autosLocalList.add(jsonAuto);
+    GlobalList.globalList = autosLocalList;
+  }
+
+  void _showListado() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ListPage(),
+        ));
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,13 +59,13 @@ class _FormPageSFState extends State<FormPageSF> {
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                textFieldPatente("PATENTE", _patenteController, "DTFJ-19"),
+                TextFieldPatente("PATENTE", patenteController, "DTFJ-19"),
                 const Text("MARCA"),
                 const SizedBox(height: 10),
                 TypeAheadField<Marca?>(
                   hideSuggestionsOnKeyboardHide: false,
                   textFieldConfiguration: TextFieldConfiguration(
-                    controller: TextEditingController(text: (_marcaController)),
+                    controller: TextEditingController(text: (marcaController)),
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.search),
                       border: OutlineInputBorder(),
@@ -61,7 +91,7 @@ class _FormPageSFState extends State<FormPageSF> {
                   ),
                   onSuggestionSelected: (Marca? suggestion) {
                     final marca = suggestion!;
-                    _marcaController = marca.name;
+                    marcaController = marca.name;
                     setState(() {});
                     ScaffoldMessenger.of(context)
                       ..removeCurrentSnackBar()
@@ -70,38 +100,10 @@ class _FormPageSFState extends State<FormPageSF> {
                       ));
                   },
                 ),
-                textFieldPrecio("PRECIO", _precioController, "\$10.000.000"),
-                ElevatedButton(
-                  child: const Text("GUARDAR"),
-                  onPressed: () {
-                    String precioControllerClean = _precioController.text;
-                    precioControllerClean = precioControllerClean.replaceAll(RegExp('[^0-9]'), '');
-                    
-                    if (GlobalList.globalList.isEmpty) {
-                      autosLocalList = [];
-                    }
-                    var mapaAuto = {
-                      "Patente": _patenteController.text,
-                      "Marca": _marcaController?.toString(),
-                      "Precio": precioControllerClean
-                    };
-                    var stringAuto = json.encode(mapaAuto);
-                    var jsonAuto = localAutoFromJson(stringAuto);
-                    autosLocalList.add(jsonAuto);
-                    GlobalList.globalList = autosLocalList;
-                  },
-                ),
+                TextFieldPrecio("PRECIO", precioController, "\$10.000.000"),
+                ButtonVoidCallback(_guardarAuto, "GUARDAR"),
                 const SizedBox(height: 40),
-                ElevatedButton(
-                  child: const Text("LISTADO"),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ListPage(),
-                        ));
-                  },
-                ),
+                ButtonVoidCallback(_showListado, "LISTADO"),
               ],
             ),
           ),

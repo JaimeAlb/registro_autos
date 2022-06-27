@@ -13,30 +13,28 @@ class ListPage extends StatefulWidget {
   State<ListPage> createState() => _ListPageState();
 }
 
-Future<List<ListaAutos>> getListOfAutosFromApi() async {
-  const String url = 'https://localhost:44337/api/Autos';
-  final response = await http.get(Uri.parse(url));
-
-  if (response.statusCode == 200) {
-    // final listaAutos = listaAutosFromJson(response.body);
-    List<ListaAutos> listaAutos = listaAutosFromJson(response.body);
-
-    return listaAutos;
-  } else {
-    throw Exception('Error!');
-  }
-}
-
 class _ListPageState extends State<ListPage> {
-  final formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
 
+  Future<List<ListaAutos>> getListOfAutosFromApi() async {
+    const String url = 'https://localhost:44337/api/Autos';
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      // final listaAutos = listaAutosFromJson(response.body);
+      List<ListaAutos> listaAutos = listaAutosFromJson(response.body);
+
+      return listaAutos;
+    } else {
+      throw Exception('Error!');
+    }
+  }
+
+  
   Widget listOfAutosFromApi(List<ListaAutos> listado) {
-    var listadoWidget = <Widget>[];
+  final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
+    var _listadoWidget = <Widget>[];
     var i = 0;
-    const foo = [];
     for (var item in listado) {
-      // foo = [1];
-      debugPrint('foo, $foo');
       i++;
       Widget obj = Container(
         width: 800,
@@ -85,7 +83,7 @@ class _ListPageState extends State<ListPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  formatCurrency.format(item.precio),
+                  _formatCurrency.format(item.precio),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -117,15 +115,16 @@ class _ListPageState extends State<ListPage> {
           ],
         ),
       );
-      listadoWidget.add(obj);
+      _listadoWidget.add(obj);
     }
     return Column(
-      children: listadoWidget,
+      children: _listadoWidget,
     );
   }
 
   Widget listOfAutosFromLocal(List<LocalAuto> listado) {
-    var listadoWidget = <Widget>[];
+  final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
+    var _listadoWidget = <Widget>[];
     for (var item in listado) {
       Widget obj = Container(
         width: 800,
@@ -172,7 +171,7 @@ class _ListPageState extends State<ListPage> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  formatCurrency.format(int.parse(item.precio)),
+                  _formatCurrency.format(int.parse(item.precio)),
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],
@@ -190,10 +189,10 @@ class _ListPageState extends State<ListPage> {
           ],
         ),
       );
-      listadoWidget.add(obj);
+      _listadoWidget.add(obj);
     }
     return Column(
-      children: listadoWidget,
+      children: _listadoWidget,
     );
   }
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../form_page_sf.dart';
+import '../2_form_page_sf.dart';
 
 postLogin(TextEditingController nombre, TextEditingController password,
     context) async {
