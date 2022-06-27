@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:registro_autos/pages/clases/local_auto.dart';
 import 'package:registro_autos/pages/global_list.dart';
+import 'package:registro_autos/pages/widgets/auto_local.dart';
 import 'api/post_auto.dart';
 
 class ListPage extends StatefulWidget {
@@ -14,6 +15,13 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  List<LocalAuto> listFromGlobal = GlobalList.globalList;
+
+  void _eraseItemFromLocal(item) {
+    setState(() {
+      GlobalList.globalList.remove(item);
+    });
+  }
 
   Future<List<ListaAutos>> getListOfAutosFromApi() async {
     const String url = 'https://localhost:44337/api/Autos';
@@ -29,9 +37,8 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
-  
   Widget listOfAutosFromApi(List<ListaAutos> listado) {
-  final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
+    final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
     var _listadoWidget = <Widget>[];
     var i = 0;
     for (var item in listado) {
@@ -122,82 +129,9 @@ class _ListPageState extends State<ListPage> {
     );
   }
 
-  Widget listOfAutosFromLocal(List<LocalAuto> listado) {
-  final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
-    var _listadoWidget = <Widget>[];
-    for (var item in listado) {
-      Widget obj = Container(
-        width: 800,
-        margin: const EdgeInsets.all(5),
-        padding: const EdgeInsets.all(10),
-        height: 120,
-        color: const Color.fromARGB(255, 122, 93, 5),
-        child: Column(
-          children: [
-            Row(
-              children: [
-                const Text(
-                  'Patente: ',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  ),
-                ),
-                Text(
-                  item.patente,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 0, 0, 0),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text(
-                  'Marca: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  item.marca,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                const Text(
-                  'Precio: ',
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  _formatCurrency.format(int.parse(item.precio)),
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ],
-            ),
-            ElevatedButton(
-              child: const Text('Borrar'),
-              onPressed: () {
-                listado.remove(item);
-                setState(() {});
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.red,
-              ),
-            )
-          ],
-        ),
-      );
-      _listadoWidget.add(obj);
-    }
-    return Column(
-      children: _listadoWidget,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    debugPrint('listFromGlobal, $listFromGlobal');
     return Scaffold(
       appBar: AppBar(title: const Center(child: Text("Listado Autos App"))),
       body: SingleChildScrollView(
@@ -228,7 +162,9 @@ class _ListPageState extends State<ListPage> {
                       return const CircularProgressIndicator();
                     },
                   ),
-                  listOfAutosFromLocal(GlobalList.globalList)
+                  ...(GlobalList.globalList).map((auto) {
+                    return AutoLocal(auto, _eraseItemFromLocal);
+                  }).toList(),
                 ],
               ),
             ),
