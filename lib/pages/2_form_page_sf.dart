@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/api/marca_api.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/3_list_page.dart';
 import 'package:registro_autos/pages/widgets/button_void_callback.dart';
 import 'package:registro_autos/pages/widgets/text_field_patente.dart';
 import 'package:registro_autos/pages/widgets/text_field_precio.dart';
+import 'package:registro_autos/pages/widgets/type_ahead_marca.dart';
 import 'clases/local_auto_class.dart';
-import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:convert';
 
 class FormPageSF extends StatefulWidget {
@@ -48,6 +47,10 @@ class _FormPageSFState extends State<FormPageSF> {
         ));
   }
 
+  void _marcaSelected(suggestion) {
+    marcaController = suggestion;
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,44 +64,7 @@ class _FormPageSFState extends State<FormPageSF> {
                 TextFieldPatente("PATENTE", patenteController, "DTFJ-19"),
                 const Text("MARCA"),
                 const SizedBox(height: 10),
-                TypeAheadField<Marca?>(
-                  hideSuggestionsOnKeyboardHide: false,
-                  textFieldConfiguration: TextFieldConfiguration(
-                    controller: TextEditingController(text: (marcaController)),
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(),
-                      hintText: 'Buscar Marca',
-                    ),
-                  ),
-                  suggestionsCallback: UserApi.getUserSuggestions,
-                  itemBuilder: (context, Marca? suggestion) {
-                    final user = suggestion!;
-
-                    return ListTile(
-                      title: Text(user.name),
-                    );
-                  },
-                  noItemsFoundBuilder: (context) => const SizedBox(
-                    height: 100,
-                    child: Center(
-                      child: Text(
-                        'Marca no encontrada',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  ),
-                  onSuggestionSelected: (Marca? suggestion) {
-                    final marca = suggestion!;
-                    marcaController = marca.name;
-                    setState(() {});
-                    ScaffoldMessenger.of(context)
-                      ..removeCurrentSnackBar()
-                      ..showSnackBar(SnackBar(
-                        content: Text('Marca seleccionada: ${marca.name}'),
-                      ));
-                  },
-                ),
+                TypeAheadMarca(_marcaSelected, marcaController),
                 TextFieldPrecio("PRECIO", precioController, "\$10.000.000"),
                 ButtonVoidCallback(_guardarAuto, "GUARDAR"),
                 const SizedBox(height: 40),
