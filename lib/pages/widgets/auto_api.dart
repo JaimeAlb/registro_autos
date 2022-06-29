@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../clases/lista_autos.dart';
+import 'package:registro_autos/pages/clases/auto_api_class.dart';
 
-Widget listOfAutosFromApi(List<ListaAutos> listado, Function setStateHandler) {
+class AutoApi extends StatelessWidget {
+  final AutoApiClass item;
+  final Function setStateHandler;
   final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);
-  var _listadoWidget = <Widget>[];
-  var i = 0;
-  for (var item in listado) {
-    i++;
-    Widget obj = Container(
+  AutoApi(this.item, this.setStateHandler, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       width: 800,
       margin: const EdgeInsets.all(5),
       padding: const EdgeInsets.all(10),
       height: 120,
-      color: i % 2 == 0
-          ? const Color.fromARGB(255, 99, 91, 91)
-          : const Color.fromARGB(255, 121, 133, 136),
+      color: const Color.fromARGB(255, 99, 91, 91),
       child: Column(
         children: [
           Row(
@@ -70,9 +70,5 @@ Widget listOfAutosFromApi(List<ListaAutos> listado, Function setStateHandler) {
         ],
       ),
     );
-    _listadoWidget.add(obj);
   }
-  return Column(
-    children: _listadoWidget,
-  );
 }

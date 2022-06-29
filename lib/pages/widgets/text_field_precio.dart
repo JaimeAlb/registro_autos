@@ -30,6 +30,5 @@ class TextFieldPrecio extends StatelessWidget {
         const SizedBox(height: 40),
       ],
     );
-    ;
   }
 }

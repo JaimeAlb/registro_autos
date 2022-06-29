@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-List<ListaAutos> listaAutosFromJson(String str) =>
-    List<ListaAutos>.from(
-        json.decode(str).map((x) => ListaAutos.fromJson(x)));
+List<AutoApiClass> listaAutosFromJson(String str) =>
+    List<AutoApiClass>.from(
+        json.decode(str).map((x) => AutoApiClass.fromJson(x)));
 
-String listaMarcasToJson(List<ListaAutos> data) =>
+String listaMarcasToJson(List<AutoApiClass> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ListaAutos {
-  ListaAutos({
+class AutoApiClass {
+  AutoApiClass({
     required this.id,
     required this.patente,
     required this.marca,
@@ -20,7 +20,7 @@ class ListaAutos {
   String marca;
   int precio;
 
-  factory ListaAutos.fromJson(Map<String, dynamic> json) => ListaAutos(
+  factory AutoApiClass.fromJson(Map<String, dynamic> json) => AutoApiClass(
         id: json["Id"],
         patente: json["Patente"],
         marca: json["Marca"],

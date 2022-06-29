@@ -5,7 +5,7 @@ import 'package:registro_autos/pages/3_list_page.dart';
 import 'package:registro_autos/pages/widgets/button_void_callback.dart';
 import 'package:registro_autos/pages/widgets/text_field_patente.dart';
 import 'package:registro_autos/pages/widgets/text_field_precio.dart';
-import 'clases/local_auto.dart';
+import 'clases/local_auto_class.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'dart:convert';
 
@@ -20,7 +20,6 @@ class _FormPageSFState extends State<FormPageSF> {
   String? marcaController;
   final TextEditingController precioController = TextEditingController();
   var autosLocalList = <LocalAuto>[];
-  // List<LocalAuto> globalLista = [  ];
 
   void _guardarAuto() {
     String precioControllerClean = precioController.text;

@@ -29,6 +29,5 @@ class TextFieldPatente extends StatelessWidget {
         const SizedBox(height: 40),
       ],
     );
-    ;
   }
 }

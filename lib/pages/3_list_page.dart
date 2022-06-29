@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/clases/lista_autos.dart';
+import 'package:registro_autos/pages/clases/auto_api_class.dart';
 import 'package:http/http.dart' as http;
-import 'package:registro_autos/pages/clases/local_auto.dart';
+import 'package:registro_autos/pages/clases/local_auto_class.dart';
 import 'package:registro_autos/pages/global_list.dart';
 import 'package:registro_autos/pages/widgets/auto_api.dart';
 import 'package:registro_autos/pages/widgets/auto_local.dart';
@@ -41,12 +41,12 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
-  Future<List<ListaAutos>> getListOfAutosFromApi() async {
+  Future<List<AutoApiClass>> getListOfAutosFromApi() async {
     const String url = 'https://localhost:44337/api/Autos';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
-      List<ListaAutos> listaAutos = listaAutosFromJson(response.body);
+      List<AutoApiClass> listaAutos = listaAutosFromJson(response.body);
 
       return listaAutos;
     } else {
@@ -76,12 +76,17 @@ class _ListPageState extends State<ListPage> {
             Center(
               child: Column(
                 children: [
-                  FutureBuilder<List<ListaAutos>>(
+                  FutureBuilder<List<AutoApiClass>>(
                     future: getListOfAutosFromApi(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return listOfAutosFromApi(
-                            snapshot.data!, _eraseItemFromApi);
+                        return Column(
+                          children: [
+                            ...(snapshot.data!)
+                                .map((item) => AutoApi(item, _eraseItemFromApi))
+                                .toList()
+                          ],
+                        );
                       } else if (snapshot.hasError) {
                         return Text("${snapshot.error}");
                       }
