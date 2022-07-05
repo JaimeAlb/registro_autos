@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:registro_autos/pages/clases/local_auto_class.dart';
+import '/pages/clases/local_auto_class.dart';
 
 class AutoLocal extends StatelessWidget {
   final _formatCurrency = NumberFormat.simpleCurrency(decimalDigits: 0);

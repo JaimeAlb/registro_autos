@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '/pages/2_form_page_sf.dart';
 import 'pages/1_login_page.dart';
 
 void main() {
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       darkTheme: ThemeData.dark(),
       home: LoginPage(),
+      // home: FormPageSF(),
       // home: Prueba(),
     );
   }

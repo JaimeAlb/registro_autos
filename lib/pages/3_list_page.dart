@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/clases/auto_api_class.dart';
 import 'package:http/http.dart' as http;
-import 'package:registro_autos/pages/clases/local_auto_class.dart';
-import 'package:registro_autos/pages/global_list.dart';
-import 'package:registro_autos/pages/widgets/auto_api.dart';
-import 'package:registro_autos/pages/widgets/auto_local.dart';
+import '/pages/clases/auto_api_class.dart';
+import '/pages/clases/local_auto_class.dart';
+import '/pages/global_list.dart';
+import '/pages/widgets/auto_api.dart';
+import '/pages/widgets/auto_local.dart';
 import 'api/post_auto.dart';
 
 class ListPage extends StatefulWidget {
@@ -29,6 +29,7 @@ class _ListPageState extends State<ListPage> {
     var request = http.Request(
       'DELETE',
       Uri.parse('https://localhost:44337/api/Autos/' + item.id.toString()),
+      // Uri.parse('https://9d59-207-248-198-238.sa.ngrok.io/api/Autos/' + item.id.toString()),
     );
     request.headers.addAll(headers);
 
@@ -43,6 +44,7 @@ class _ListPageState extends State<ListPage> {
 
   Future<List<AutoApiClass>> getListOfAutosFromApi() async {
     const String url = 'https://localhost:44337/api/Autos';
+    // const String url = 'https://9d59-207-248-198-238.sa.ngrok.io/api/Autos';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {

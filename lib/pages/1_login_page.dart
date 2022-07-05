@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/api/post_login.dart';
+import '/pages/api/post_login.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);

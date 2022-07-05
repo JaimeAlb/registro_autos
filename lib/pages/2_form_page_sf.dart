@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:registro_autos/pages/global_list.dart';
-import 'package:registro_autos/pages/3_list_page.dart';
-import 'package:registro_autos/pages/widgets/button_void_callback.dart';
-import 'package:registro_autos/pages/widgets/text_field_patente.dart';
-import 'package:registro_autos/pages/widgets/text_field_precio.dart';
-import 'package:registro_autos/pages/widgets/type_ahead_marca.dart';
+import '/pages/global_list.dart';
+import '/pages/3_list_page.dart';
+import '/pages/widgets/button_void_callback.dart';
+import '/pages/widgets/text_field_patente.dart';
+import '/pages/widgets/text_field_precio.dart';
+import '/pages/widgets/type_ahead_marca.dart';
 import 'clases/local_auto_class.dart';
 import 'dart:convert';
 
@@ -18,7 +18,7 @@ class _FormPageSFState extends State<FormPageSF> {
   final TextEditingController patenteController = TextEditingController();
   String? marcaController;
   final TextEditingController precioController = TextEditingController();
-  var autosLocalList = <LocalAuto>[];
+  var _autosLocalList = <LocalAuto>[];
 
   void _guardarAuto() {
     String precioControllerClean = precioController.text;
@@ -26,7 +26,7 @@ class _FormPageSFState extends State<FormPageSF> {
         precioControllerClean.replaceAll(RegExp('[^0-9]'), '');
 
     if (GlobalList.globalList.isEmpty) {
-      autosLocalList = [];
+      _autosLocalList = [];
     }
     var mapaAuto = {
       "Patente": patenteController.text,
@@ -35,8 +35,8 @@ class _FormPageSFState extends State<FormPageSF> {
     };
     var stringAuto = json.encode(mapaAuto);
     var jsonAuto = localAutoFromJson(stringAuto);
-    autosLocalList.add(jsonAuto);
-    GlobalList.globalList = autosLocalList;
+    _autosLocalList.add(jsonAuto);
+    GlobalList.globalList = _autosLocalList;
   }
 
   void _showListado() {

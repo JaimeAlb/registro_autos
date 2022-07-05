@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:registro_autos/pages/clases/auto_api_class.dart';
+import '/pages/clases/auto_api_class.dart';
 
 class AutoApi extends StatelessWidget {
   final AutoApiClass item;

@@ -16,6 +16,7 @@ class Marca {
 class UserApi {
   static Future<List<Marca>> getUserSuggestions(String query) async {
     final url = Uri.parse('https://localhost:44337/api/Marcas');
+    // final url = Uri.parse('https://9d59-207-248-198-238.sa.ngrok.io/api/Marcas');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
